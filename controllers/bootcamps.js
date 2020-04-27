@@ -23,12 +23,21 @@ exports.getBootcamp = (req, res, next) => {
 //@description Create Bootcamp (create)
 //@route POST /api/v1/bootcamps
 //@access private
-exports.createBootcamp = (req, res, next) => {
-    res.status(200).json({
-        success: true,
-        msg: 'create new bootcamp'
-    });
-}
+exports.createBootcamp = async (req, res, next) => {
+    try {
+        const bootcamp = await Bootcamp.create(req.body);
+
+        res.status(201).json({
+            success: true,
+            data: bootcamp
+        });
+    } catch (error) {
+        res.status(400).json({
+            success: false
+        })
+    }
+
+};
 
 //@description Update Bootcamp (update)
 //@route PUT /api/v1/bootcamps/:id
@@ -38,7 +47,7 @@ exports.updateBootcamp = (req, res, next) => {
         success: true,
         msg: `Update bootcamp ${req.params.id}`
     });
-}
+};
 
 //@description Delete Bootcamp (destroy)
 //@route DELETE /api/v1/bootcamps/:id
@@ -48,4 +57,4 @@ exports.deleteBootcamp = (req, res, next) => {
         success: true,
         msg: `Delete bootcamp ${req.params.id}`
     });
-}
+};
